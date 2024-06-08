@@ -4,7 +4,7 @@ sources:
   - name: raw
     schema: gz_raw_data
     description: data from gz_raw_data (ex. 2.2.1)
-    tables: 
+    tables:
       - name: product
         identifier: raw_gz_product
         description: product table
@@ -14,5 +14,3 @@ sources:
       - name: ship
         identifier: raw_gz_ship
         description: shipping table
-
-      
