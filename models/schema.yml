@@ -88,12 +88,3 @@ models:
         description: Quantity
         tests:
           - not_null
-
-
-
-
-
-
-
-
-
