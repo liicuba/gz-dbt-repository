@@ -7,7 +7,7 @@ sources:
     tables:
       - name: product
         identifier: raw_gz_product
-        description: product table of greenweez 
+        description: product table of greenweez
         columns:
           - name: products_id
             description: primary key of the table
@@ -16,31 +16,33 @@ sources:
               - not_null
           - name: purchase_price
             description: the purchase price of the product
+
       - name: sales
         identifier: raw_gz_sales
         description: sales table of greenweez / we have one row per products_id found in each orders_id.
         columns:
           - name: date_date
-            description: the date of purchace
+            description: the date of purchase
           - name: orders_id
-            description: foreing key to ship
+            description: foreign key to ship
           - name: pdt_id
-            description: foreing key to product
+            description: foreign key to product
           - name: revenue
-            description: the amount paid by the customer to purchase the product. revenue = qunatity * selling_price
+            description: the amount paid by the customer to purchase the product. revenue = quantity * selling_price
           - name: quantity
             description: the quantity of the products purchased for this order
         tests:
-            - unique:            
-                column_name: "(orders_id || '-' || pdt_id)"
-            ##OR## 
-            - dbt_utils.unique_combination_of_columns:
-                combination_of_columns: 
-                  - orders_id
-                  - pdt_id
+          - unique:
+              column_name: "(orders_id || '-' || pdt_id)"
+          ## OR ##
+          - dbt_utils.unique_combination_of_columns:
+              combination_of_columns:
+                - orders_id
+                - pdt_id
+
       - name: ship
         identifier: raw_gz_ship
-        description: shipping table of greenweez 
+        description: shipping table of greenweez
         columns:
           - name: orders_id
             description: primary key of the table
@@ -52,4 +54,46 @@ sources:
           - name: log_cost
             description: the cost of preparing the parcel in the warehouse
           - name: ship_cost
-            description: the shipping cost paid by Greenweez to the carrier/ transporter
+            description: the shipping cost paid by Greenweez to the carrier/transporter
+
+models:
+  - name: int_sales_margin
+    description: Model for calculating sales margin
+    columns:
+      - name: orders_id
+        description: Order ID
+        tests:
+          - not_null
+      - name: products_id
+        description: Product ID
+        tests:
+          - not_null
+      - name: margin
+        description: Margin
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: Purchase cost
+        tests:
+          - not_null
+      - name: date_date
+        description: Date of purchase
+        tests:
+          - not_null
+      - name: revenue
+        description: Revenue
+        tests:
+          - not_null
+      - name: quantity
+        description: Quantity
+        tests:
+          - not_null
+
+
+
+
+
+
+
+
+
